@@ -1,3 +1,5 @@
+let api = "http://localhost:8080";
+
 let tableDiv = document.getElementById("table");
 tableDiv.innerHTML = "";
 
@@ -28,13 +30,13 @@ async function showtable() {
       <th>Button</th>
     `;
 
-    table.appendChild(thead);
+    table.append(thead);
 
     // Append table body
-    table.appendChild(tbody);
+    table.append(tbody);
 
     // Append the table to the tableDiv
-    tableDiv.appendChild(table);
+    tableDiv.append(table);
 
     // tableDiv.innerHTML = `
 
@@ -61,45 +63,100 @@ async function showtable() {
 
     // `;
 
-    users.forEach((user) => {
+    users.forEach(async (user) => {
       let row = document.createElement("tr");
 
       let nameCell = document.createElement("td");
       nameCell.textContent = user.name;
-      row.appendChild(nameCell);
+      row.append(nameCell);
 
       let emailCell = document.createElement("td");
       emailCell.textContent = user.email;
-      row.appendChild(emailCell);
+      row.append(emailCell);
 
       let phoneCell = document.createElement("td");
       phoneCell.textContent = user.phone;
-      row.appendChild(phoneCell);
+      row.append(phoneCell);
 
       let websiteCell = document.createElement("td");
       websiteCell.textContent = user.website;
-      row.appendChild(websiteCell);
+      row.append(websiteCell);
 
       let cityCell = document.createElement("td");
       cityCell.textContent = user.address.city;
-      row.appendChild(cityCell);
+      row.append(cityCell);
 
       let companyCell = document.createElement("td");
       companyCell.textContent = user.company.name;
-      row.appendChild(companyCell);
+      row.append(companyCell);
 
       // Add a button cell if needed
-      let buttonCell = document.createElement("td");
-      let button = document.createElement("button");
-      button.textContent = "Action"; // Change this to whatever action you want the button to perform
-      buttonCell.appendChild(button);
-      row.appendChild(buttonCell);
 
-      tbody.appendChild(row);
+      let userStatus = await fetch(`${api}/user/getUser/${user.id}`);
+      userStatus = await userStatus.json();
+
+      let buttonCell = document.createElement("td");
+      let tbutton = document.createElement("button");
+      tbutton.textContent = userStatus.isUser ? "Open" : "Add"; //"Action"; // Change this to whatever action you want the button to perform
+      tbutton.addEventListener("click", () => {
+        buttonClick(user, tbutton);
+      });
+      //button.onclick(buttonClick(userStatus,user))
+
+      buttonCell.append(tbutton);
+
+      row.append(buttonCell);
+
+      tbody.append(row);
     });
 
     console.log(users);
   } catch (error) {
     console.log(error);
+  }
+}
+
+async function buttonClick(user, tbutton) {
+  //console.log("clicking on button");
+  //console.log("nnnnnn.....", userStatus, user);
+
+  let userStatus = await fetch(`${api}/user/getUser/${user.id}`);
+  userStatus = await userStatus.json();
+
+  if (userStatus.isUser == false) {
+    let bodyObject = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      website: user.website,
+      city: user.address.city,
+      company: user.company.name,
+    };
+
+    console.log("bodyObject", bodyObject);
+
+    try {
+      let addUser = await fetch(`${api}/user/addUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyObject),
+      });
+
+      addUser = await addUser.json();
+      console.log("addUser", addUser);
+
+      tbutton.textContent = "Open";
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (userStatus.isUser == true) {
+    localStorage.setItem("cointabid", JSON.stringify(user.id));
+
+    window.location.href = "/frontend/postPage.html";
+
+    console.log("this is open");
   }
 }

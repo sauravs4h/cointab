@@ -1,0 +1,35 @@
+#button {
+  text-align: center;
+}
+
+#button > button {
+  width: 140px;
+  height: 60px;
+}
+
+#post {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#post > div {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
+  margin-bottom: 20px;
+  padding: 20px;
+  width: calc(33.33% - 20px); /* Adjust width for responsiveness */
+  flex-basis: calc(33.33% - 20px); /* Adjust basis for responsiveness */
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-top: 0;
+  color: #555; /* Adjust text color as needed */
+}
