@@ -1,7 +1,7 @@
 const { sequelize } = require("../config/db");
 const { DataTypes } = require("sequelize");
 
-const User = sequelize.define(
+const Post = sequelize.define(
   "posts",
   {
     id: {
@@ -13,6 +13,10 @@ const User = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -21,7 +25,7 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Company: {
+    company: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -29,4 +33,4 @@ const User = sequelize.define(
   { createdAt: false, updatedAt: false }
 );
 
-module.exports = { User };
+module.exports = { Post };

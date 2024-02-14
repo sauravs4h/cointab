@@ -7,9 +7,11 @@ app.use(express.json());
 
 app.use(cors())
 
-const {user} = require("./routes/userRoutes");
+const {user} = require("./routes/userRoutes")
+const {coinPost}= require("./routes/postRouter");
 
 app.use("/user", user);
+app.use("/post",coinPost)
 
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "hello" });
