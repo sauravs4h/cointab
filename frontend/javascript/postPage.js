@@ -10,21 +10,14 @@ const checkButtonStatus = async () => {
 };
 
 checkButtonStatus();
-//console.log("chalo bhai");
+
 
 // Function to toggle button text based on data availability
 function toggleButtonText(isAvailable) {
   button.innerText = isAvailable ? "Download In Excel" : "Bulk Add";
 }
 
-// // Fetch data and toggle button text accordingly
-// fetch(`${api}/post/getOnePost/${userId}`)
-//   .then((res) => res.json())
-//   .then((data) => {
-//     console.log("data", data);
-//     toggleButtonText(data.isAvailable);
-//   })
-//   .catch((error) => console.log(error));
+
 
 // Button click event listener
 button.addEventListener("click", async function () {
@@ -33,7 +26,7 @@ button.addEventListener("click", async function () {
 
     getOnePost = await getOnePost.json();
 
-    console.log("getOnePost", getOnePost);
+   
 
     if (getOnePost.isAvailable) {
       let response = await fetch(`${api}/post/sendExcelFile/${userId}`);
@@ -51,7 +44,7 @@ button.addEventListener("click", async function () {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      console.log("resmika", response);
+      
       // download in excel
       console.log("download in excel");
     } else {
@@ -91,7 +84,7 @@ button.addEventListener("click", async function () {
 
         postData = await postData.json();
 
-        console.log("postData...", postData);
+        
       });
 
       location.reload();
@@ -109,7 +102,7 @@ async function showPost() {
   user = await fetch(`${api}/user/getUser/${userId}`);
   user = await user.json();
   user = user.user;
-  console.log(user);
+  
 
   let getPost = await fetch(
     `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
@@ -140,7 +133,7 @@ async function showPost() {
     cardDiv.append(nametext, titletext, bodytext, companytext);
   });
 
-  console.log("getPost", getPost);
+  
 }
 
 showPost();
