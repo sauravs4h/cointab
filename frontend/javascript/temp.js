@@ -2,21 +2,30 @@ const api = "http://localhost:8080";
 const userId = JSON.parse(localStorage.getItem("cointabid"));
 let button = document.getElementById("myButton");
 
+const checkButtonStatus = async () => {
+  console.log("chalo bhai");
+
+  let res = await fetch(`${api}/post/getOnePost/${userId}`);
+  res = res.json();
+  console.log("....j", res);
+};
+
+checkButtonStatus();
+//console.log("chalo bhai");
+
 // Function to toggle button text based on data availability
 function toggleButtonText(isAvailable) {
   button.innerText = isAvailable ? "Download In Excel" : "Bulk Add";
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-
-// Fetch data and toggle button text accordingly
-fetch(`${api}/post/getOnePost/${userId}`)
-  .then((res) => res.json())
-  .then((data) => {
-    console.log("data", data);
-    toggleButtonText(data.isAvailable);
-  })
-  .catch((error) => console.log(error));
+// // Fetch data and toggle button text accordingly
+// fetch(`${api}/post/getOnePost/${userId}`)
+//   .then((res) => res.json())
+//   .then((data) => {
+//     console.log("data", data);
+//     toggleButtonText(data.isAvailable);
+//   })
+//   .catch((error) => console.log(error));
 
 // Button click event listener
 button.addEventListener("click", async function () {
@@ -28,10 +37,8 @@ button.addEventListener("click", async function () {
     console.log("getOnePost", getOnePost);
 
     if (getOnePost.isAvailable) {
-
-      // download in excel 
+      // download in excel
       console.log("download in excel");
-
     } else {
       user = await fetch(`${api}/user/getUser/${userId}`);
       user = await user.json();
@@ -42,41 +49,39 @@ button.addEventListener("click", async function () {
       );
       getPost = await getPost.json();
 
-      getPost.forEach(async(el) => {
-        let id= el.id
+      getPost.forEach(async (el) => {
+        let id = el.id;
         let name = user.name;
         let title = el.title;
         let body = el.body;
         let company = user.company;
 
-        let payload={
+        let payload = {
           id,
           userId,
           name,
           title,
           body,
-          company
-        }
+          company,
+        };
 
-        let postData= await fetch(`${api}/post/addPost`,{
+        let postData = await fetch(`${api}/post/addPost`, {
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
-        })
+        });
 
-        postData= await postData.json();
+        postData = await postData.json();
 
-        console.log("postData...",postData);
-
+        console.log("postData...", postData);
       });
 
-      location.reload()
+      location.reload();
     }
   } catch (error) {
     console.log(error);
   }
-});
 });
 
 /////////////////////////////// Post /////////////////
