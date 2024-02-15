@@ -1,4 +1,5 @@
-let api = "http://localhost:8080";
+//let api = "http://localhost:8080";
+let api= "https://cointab-derp.onrender.com"
 
 let tableDiv = document.getElementById("table");
 tableDiv.innerHTML = "";

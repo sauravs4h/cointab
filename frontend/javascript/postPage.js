@@ -1,4 +1,6 @@
-const api = "http://localhost:8080";
+//const api = "http://localhost:8080";
+
+const api= "https://cointab-derp.onrender.com"
 const userId = JSON.parse(localStorage.getItem("cointabid"));
 let button = document.getElementById("myButton");
 
