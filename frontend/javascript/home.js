@@ -156,7 +156,7 @@ async function buttonClick(user, tbutton) {
   } else if (userStatus.isUser == true) {
     localStorage.setItem("cointabid", JSON.stringify(user.id));
 
-    window.location.href = "/frontend/postPage.html";
+    window.location.href = "/postPage.html";
 
     console.log("this is open");
   }
