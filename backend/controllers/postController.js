@@ -31,7 +31,7 @@ const getOnePost = async (req, res) => {
     let post = await Post.findOne({ where: { userId: userId } });
 
     if (post) {
-      res.status(200).json({ isAvailable: true });
+      res.status(200).json({ isAvailable: true,post });
     } else {
       res.status(200).json({ isAvailable: false });
     }

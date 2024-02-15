@@ -29,6 +29,9 @@ button.addEventListener("click", async function () {
    
 
     if (getOnePost.isAvailable) {
+
+      let name= getOnePost.post.name;
+
       let response = await fetch(`${api}/post/sendExcelFile/${userId}`);
       if (!response.ok) {
         throw new Error("Failed to download data");
@@ -38,7 +41,7 @@ button.addEventListener("click", async function () {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "data.xlsx";
+      a.download = `${name}.xlsx`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
