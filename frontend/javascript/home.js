@@ -9,6 +9,7 @@ let allUserButton = document.getElementById("allUserButton");
 allUserButton.addEventListener("click", showtable);
 
 async function showtable() {
+  tableDiv.innerHTML = "";
   try {
     let apiData = await fetch("https://jsonplaceholder.typicode.com/users", {
       method: "Get",
